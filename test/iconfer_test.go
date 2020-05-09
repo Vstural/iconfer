@@ -39,18 +39,15 @@ var example = ExampleConfig{
 	},
 }
 
-func TestLoadConfig(t *testing.T) {
-	res, err := json.Marshal(example)
-	if err != nil {
-		panic(err)
-	}
+var exampleBytes, _ = json.Marshal(example)
 
+func TestLoadConfig(t *testing.T) {
 	path, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 	writePath := fmt.Sprintf("%s\\%s", path, `example_config.json`)
-	filecontent, err := iconfer.ReadOrCreate(writePath, string(res))
+	filecontent, err := iconfer.ReadOrCreate(writePath, string(exampleBytes))
 	if err != nil {
 		panic(err)
 	}
@@ -58,11 +55,6 @@ func TestLoadConfig(t *testing.T) {
 }
 
 func TestGenerateExampleConfig(t *testing.T) {
-
-	res, err := json.Marshal(example)
-	if err != nil {
-		panic(err)
-	}
 	path, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -73,7 +65,7 @@ func TestGenerateExampleConfig(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	_, err = f.Write(res)
+	_, err = f.Write(exampleBytes)
 	if err != nil {
 		panic(err)
 	}
