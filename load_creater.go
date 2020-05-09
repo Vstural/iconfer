@@ -5,15 +5,15 @@ import (
 )
 
 func ReadOrCreate(path, defaultContent string) (string, error) {
-	content, err := readFileContent(path)
+	content, err := ReadFileContent(path)
 	if err != nil {
-		writeFileContent(path, defaultContent)
+		_ = WriteFileContent(path, defaultContent)
 		return "", err
 	}
 	return content, nil
 }
 
-func readFileContent(path string) (string, error) {
+func ReadFileContent(path string) (string, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return "", err
@@ -31,7 +31,7 @@ func readFileContent(path string) (string, error) {
 	return string(data), nil
 }
 
-func writeFileContent(path string, content string) error {
+func WriteFileContent(path string, content string) error {
 	f, err := os.Create(path)
 	if err != nil {
 		return err

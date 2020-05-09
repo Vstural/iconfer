@@ -1,11 +1,5 @@
-# iconfer 
+package test
 
-`go get github.com/Vstural/iconfer`
-
-read target path file, if read fail, create a example config and return error
-
-usage 
-```go
 import (
 	"encoding/json"
 	"fmt"
@@ -45,11 +39,42 @@ var example = ExampleConfig{
 	},
 }
 
-var path = "./hello.json"
 func TestLoadConfig(t *testing.T) {
+	res, err := json.Marshal(example)
+	if err != nil {
+		panic(err)
+	}
 
+	path, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	writePath := fmt.Sprintf("%s\\%s", path, `example_config.json`)
 	filecontent, err := iconfer.ReadOrCreate(writePath, string(res))
-	if err ...
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println(filecontent)
 }
-```
+
+func TestGenerateExampleConfig(t *testing.T) {
+
+	res, err := json.Marshal(example)
+	if err != nil {
+		panic(err)
+	}
+	path, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	writePath := fmt.Sprintf("%s\\%s", path, `example_config.json`)
+	fmt.Println(writePath)
+	f, err := os.OpenFile(writePath, os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil {
+		panic(err)
+	}
+	_, err = f.Write(res)
+	if err != nil {
+		panic(err)
+	}
+}
