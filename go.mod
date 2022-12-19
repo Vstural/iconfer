@@ -1,3 +1,3 @@
 module github.com/Vstural/iconfer
 
-go 1.14
+go 1.19

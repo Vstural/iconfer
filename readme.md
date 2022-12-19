@@ -4,6 +4,32 @@
 
 read target path file, if read fail, create a example config and return error
 
+
+usage with generic
+also see unit test
+```go
+type TestConfig struct {
+    Path  string `json:"path"`
+    Value int    `json:"value"`
+    User  string `json:"user"`
+}
+func main(){
+    exampleConfig := TestConfig{
+        Path:  "123",
+        Value: 456,
+        User:  "789",
+    }
+    
+    res, _, err := NewConf[TestConfig]("./config.json", &exampleConfig)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(res.Config)
+}
+
+
+```
+
 usage 
 ```go
 import (
